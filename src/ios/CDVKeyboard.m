@@ -159,6 +159,8 @@ static IMP WKOriginalImp;
 
 - (void)shrinkViewKeyboardWillChangeFrame:(NSNotification*)notif
 {
+    return;
+
     // No-op on iOS 7.0.  It already resizes webview by default, and this plugin is causing layout issues
     // with fixed position elements.  We possibly should attempt to implement shrinkview = false on iOS7.0.
     // iOS 7.1+ behave the same way as iOS 6
