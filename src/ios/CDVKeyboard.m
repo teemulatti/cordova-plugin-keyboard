@@ -147,7 +147,7 @@ static IMP WKOriginalImp;
     // Remove WKWebView's keyboard observers when using shrinkView
     // They've caused several issues with the plugin (#32, #55, #64)
     // Even if you later set shrinkView to false, the observers will not be added back
-    /* ajs
+    /* ajs: This does not work because if you call shrinkView(true) and then shrinkView(false), pan does not work anymore (because notifications are not sent).
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     if ([self.webView isKindOfClass:NSClassFromString(@"WKWebView")]) {
         [nc removeObserver:self.webView name:UIKeyboardWillHideNotification object:nil];
@@ -184,7 +184,8 @@ static IMP WKOriginalImp;
     screen = [self.webView convertRect:screen fromView:nil];
 
     // if the webview is below the status bar, offset and shrink its frame
-    //ajs: if ([self settingForKey:@"StatusBarOverlaysWebView"] != nil && ![[self settingForKey:@"StatusBarOverlaysWebView"] boolValue]) {
+    //ajs: For some reason reading this value does not work, so for now setting true always. Consider to fix properly or make method to change this for Keyboard.
+    // if ([self settingForKey:@"StatusBarOverlaysWebView"] != nil && ![[self settingForKey:@"StatusBarOverlaysWebView"] boolValue]) {
     if (true) { //ajs
         CGRect full, remainder;
         CGRectDivide(screen, &remainder, &full, statusBar.size.height, CGRectMinYEdge);
