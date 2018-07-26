@@ -147,13 +147,14 @@ static IMP WKOriginalImp;
     // Remove WKWebView's keyboard observers when using shrinkView
     // They've caused several issues with the plugin (#32, #55, #64)
     // Even if you later set shrinkView to false, the observers will not be added back
+    /* ajs
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     if ([self.webView isKindOfClass:NSClassFromString(@"WKWebView")]) {
         [nc removeObserver:self.webView name:UIKeyboardWillHideNotification object:nil];
         [nc removeObserver:self.webView name:UIKeyboardWillShowNotification object:nil];
         [nc removeObserver:self.webView name:UIKeyboardWillChangeFrameNotification object:nil];
         [nc removeObserver:self.webView name:UIKeyboardDidChangeFrameNotification object:nil];
-    }
+    } */
     _shrinkView = shrinkView;
 }
 
@@ -197,7 +198,7 @@ static IMP WKOriginalImp;
     CGRect keyboardIntersection = CGRectIntersection(screen, keyboard);
     if (CGRectContainsRect(screen, keyboardIntersection) && !CGRectIsEmpty(keyboardIntersection) && _shrinkView && self.keyboardIsVisible) {
         screen.size.height -= keyboardIntersection.size.height;
-        //!self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
+        self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
     }
 
     // A view's frame is in its superview's coordinate system so we need to convert again
