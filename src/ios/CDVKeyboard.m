@@ -183,8 +183,8 @@ static IMP WKOriginalImp;
     screen = [self.webView convertRect:screen fromView:nil];
 
     // if the webview is below the status bar, offset and shrink its frame
-    //if ([self settingForKey:@"StatusBarOverlaysWebView"] != nil && ![[self settingForKey:@"StatusBarOverlaysWebView"] boolValue]) {
-    if (true) {
+    //ajs: if ([self settingForKey:@"StatusBarOverlaysWebView"] != nil && ![[self settingForKey:@"StatusBarOverlaysWebView"] boolValue]) {
+    if (true) { //ajs
         CGRect full, remainder;
         CGRectDivide(screen, &remainder, &full, statusBar.size.height, CGRectMinYEdge);
         screen = full;
@@ -197,7 +197,7 @@ static IMP WKOriginalImp;
     CGRect keyboardIntersection = CGRectIntersection(screen, keyboard);
     if (CGRectContainsRect(screen, keyboardIntersection) && !CGRectIsEmpty(keyboardIntersection) && _shrinkView && self.keyboardIsVisible) {
         screen.size.height -= keyboardIntersection.size.height;
-        self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
+        //!self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
     }
 
     // A view's frame is in its superview's coordinate system so we need to convert again
