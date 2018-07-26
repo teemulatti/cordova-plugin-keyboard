@@ -1,5 +1,11 @@
 # cordova-plugin-keyboard
 
+This is a fork from cjpearson/cordova-plugin-keyboard with changes for iOS platform targetting EULE/android-js use. The following changes have been made compared to original:
+
+* Fix for view resize when status bar is not overlayed.
+
+* Fix for disappearing notifications when shrink view is set to false.
+
 > This plugin provides the `Keyboard` object which has some functions to customize and control the keyboard. It also supports the __HideKeyboardFormAccessoryBar__ (boolean) and __KeyboardShrinksView__ (boolean) preferences in config.xml.
 
 This plugin has only been tested in Cordova 3.2 or greater, and its use in previous Cordova versions is not recommended (potential conflict with keyboard customization code present in the core in previous Cordova versions). 
