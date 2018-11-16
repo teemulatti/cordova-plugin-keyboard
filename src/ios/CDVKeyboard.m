@@ -213,12 +213,6 @@ static IMP WKOriginalImp;
 
     // A view's frame is in its superview's coordinate system so we need to convert again
     self.webView.frame = [self.webView.superview convertRect:screen fromView:self.webView];
-  
-    // iOS12 fix [https://github.com/cjpearson/cordova-plugin-keyboard/issues/77]
-    if (@available(iOS 12, *)) {
-        CGSize revisedSize = CGSizeMake(self.webView.frame.size.width, self.webView.frame.size.height - keyboard.size.height);
-        self.webView.scrollView.contentSize = revisedSize;
-    }
 }
 
 #pragma mark UIScrollViewDelegate
