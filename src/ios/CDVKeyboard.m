@@ -198,21 +198,18 @@ static IMP WKOriginalImp;
     // The webview should always be able to return to full size
     CGRect keyboardIntersection = CGRectIntersection(screen, keyboard);
     if (CGRectContainsRect(screen, keyboardIntersection) && !CGRectIsEmpty(keyboardIntersection) && _shrinkView && self.keyboardIsVisible) {
-        // iOS12 fix [https://github.com/cjpearson/cordova-plugin-keyboard/issues/77]
-        if (@available(iOS 12, *)) {
-            self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView; // order intentionally swapped
-            screen.size.height -= keyboardIntersection.size.height;
-            CGSize revisedSize = CGSizeMake(self.webView.scrollView.frame.size.width, self.webView.scrollView.frame.size.height - keyboard.size.height);
-            self.webView.scrollView.contentSize = revisedSize;
-        }
-        else {
-            screen.size.height -= keyboardIntersection.size.height;
-            self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
-        }
+        screen.size.height -= keyboardIntersection.size.height;
+        self.webView.scrollView.scrollEnabled = !self.disableScrollingInShrinkView;
     }
 
     // A view's frame is in its superview's coordinate system so we need to convert again
     self.webView.frame = [self.webView.superview convertRect:screen fromView:self.webView];
+  
+    // iOS12 fix [https://github.com/cjpearson/cordova-plugin-keyboard/issues/77]
+    if (@available(iOS 12, *) && !_shrinkView && !self.keyboardIsVisible) {
+        CGSize revisedSize = CGSizeMake(self.webView.frame.size.width, self.webView.frame.size.height - keyboard.size.height);
+        self.webView.scrollView.contentSize = revisedSize;
+    }
 }
 
 #pragma mark UIScrollViewDelegate
