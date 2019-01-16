@@ -211,7 +211,7 @@ static IMP WKOriginalImp;
         CGSize revisedSize = CGSizeMake(self.webView.frame.size.width, self.webView.frame.size.height - keyboard.size.height);
         self.webView.scrollView.contentSize = revisedSize;
 
-        for (View* v in self.webView.subviews) {
+        for (UIView* v in self.webView.subviews) {
             if ([v isKindOfClass:NSClassFromString(@"WKScrollView")]) {
                 UIScrollView* scrollView = (UIScrollView*) v;
                 [scrollView setContentOffset:CGPointMake(0, 0)];
