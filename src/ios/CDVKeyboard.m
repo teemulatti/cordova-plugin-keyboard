@@ -206,9 +206,18 @@ static IMP WKOriginalImp;
     self.webView.frame = [self.webView.superview convertRect:screen fromView:self.webView];
   
     // iOS12 fix [https://github.com/cjpearson/cordova-plugin-keyboard/issues/77]
+    // and [https://github.com/ionic-team/cordova-plugin-ionic-webview/pull/201/commits/841964a88d0238b8736a6cbd47c4eaa7d1913acc]
     if (@available(iOS 12, *) && !_shrinkView && !self.keyboardIsVisible) {
         CGSize revisedSize = CGSizeMake(self.webView.frame.size.width, self.webView.frame.size.height - keyboard.size.height);
         self.webView.scrollView.contentSize = revisedSize;
+
+        WKWebView* webview = (WKWebView*) self.webView;
+        for (UIView* v in webview.subviews) {
+            if ([v isKindOfClass:NSClassFromString(@"WKScrollView")]) {
+                UIScrollView* scrollView = (UIScrollView*) v;
+                [scrollView setContentOffset:CGPointMake(0, 0)];
+            }
+        }
     }
 }
 
